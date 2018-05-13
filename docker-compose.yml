@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    shm_size: 1g
+    volumes:
+      - ./docker_volumes/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secretPasswordToBeSetInAnotherPlaceInTheFuture
+      - MYSQL_USER=desafio
+      - MYSQL_PASSWORD=mudar123
+      - MYSQL_DATABASE=b2wadds
+  desafio:
+    image: node:8
+    command: bash -c "cd app;\
+          npm install;\
+          npm run start"
+    volumes:
+      - ./docker_volumes/desafio:/app
+    ports:
+      - '3001:3001'
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    environment:
+      - DB_CLIENT=mysql
+      - DB_USER=desafio
+      - DB_PASS=mudar123
+      - DB_HOST=mysql
+      - DB_DATABASE=b2wadds
+
+volumes:
+  mysql:
+  desafio:
