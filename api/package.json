@@ -8,6 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "hapi": "^17.4.0",
+    "joi": "^13.3.0",
     "mysql": "^2.15.0"
   }
 }
