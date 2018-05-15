@@ -26,6 +26,38 @@ services:
       - DB_PASS=mudar123
       - DB_HOST=mysql
       - DB_DATABASE=b2wadds
+  foo:
+    build:
+      context: .
+      dockerfile: ./foo/Dockerfile
+    ports:
+      - '3002:3000'
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    environment:
+      - DB_CLIENT=mysql
+      - DB_USER=desafio
+      - DB_PASS=mudar123
+      - DB_HOST=mysql
+      - DB_DATABASE=b2wadds
+  fighters:
+    build:
+      context: .
+      dockerfile: ./fighters/Dockerfile
+    ports:
+      - '3003:4000'
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    environment:
+      - DB_CLIENT=mysql
+      - DB_USER=desafio
+      - DB_PASS=mudar123
+      - DB_HOST=mysql
+      - DB_DATABASE=b2wadds
 
 volumes:
   mysql:
