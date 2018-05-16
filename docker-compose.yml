@@ -13,9 +13,11 @@ services:
       - MYSQL_PASSWORD=mudar123
       - MYSQL_DATABASE=b2wadds
   desafio:
-    build: ./api
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
     ports:
-      - '3001:3001'
+      - '3001:3000'
     depends_on:
       - mysql
     links:

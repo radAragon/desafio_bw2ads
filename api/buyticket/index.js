@@ -3,7 +3,7 @@ const handler = require('./handler')
 
 module.exports = {
   method: 'POST',
-  path: '/',
+  path: '/buy',
   handler,
   options: {
     validate: {

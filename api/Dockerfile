@@ -1,11 +1,9 @@
 FROM node:8
 
-COPY . /app
+COPY ./api /app
 
 WORKDIR /app
 
-RUN ls -lh
-
 RUN npm install
 
-CMD npm start
+CMD ["npm", "start"]

@@ -8,4 +8,4 @@ WORKDIR /app
 
 RUN npm install
 
-CMD node index
+CMD ["node", "index"]

@@ -1,16 +1,27 @@
 const hapi = require('hapi')
 const buyticket = require('./buyticket')
 
+const PORT = 3000
+
 const server = hapi.server({
-  port: 3001,
-  host: 'localhost'
+  port: PORT,
+  host: 'localhost',
+  debug: {
+    request: '*'
+  }
 })
 
 server.route(buyticket)
 
+server.route({
+  path: '/health',
+  method: 'GET',
+  handler: () => 'alive'
+})
+
 async function init () {
   await server.start()
-  console.log('desafio api is listening on port 3001!')
+  console.log(`desafio api is listening on port ${PORT}!`)
 }
 
 process.on('unhandledRejection', (err) => {
