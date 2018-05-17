@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   mysql:
     image: mysql:5.7
     ports:
@@ -13,6 +14,18 @@ services:
       - MYSQL_USER=desafio
       - MYSQL_PASSWORD=mudar123
       - MYSQL_DATABASE=b2wadds
+
+  rabbitmq:
+    image: rabbitmq:3.7
+    ports:
+      - '5672:5672'
+    volumes:
+      - ./docker_volumes/rabbitmq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=secretPhrase
+      - RABBITMQ_DEFAULT_USER=desafio
+      - RABBITMQ_DEFAULT_PASS=mudar123
+
   desafio:
     build:
       context: .
@@ -21,14 +34,21 @@ services:
       - '3001:3000'
     depends_on:
       - mysql
+      - rabbitmq
     links:
       - mysql
+      - rabbitmq
     environment:
       - DB_USER=desafio
       - DB_PASS=mudar123
       - DB_HOST=mysql
       - DB_PORT=3006
       - DB_NAME=b2wadds
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_QUEUE=fila1
+      - RABBITMQ_USER=desafio
+      - RABBITMQ_PASS=mudar123
+
   foo:
     build:
       context: .
@@ -45,6 +65,7 @@ services:
       - DB_HOST=mysql
       - DB_PORT=3006
       - DB_NAME=b2wadds
+
   fighters:
     build:
       context: .

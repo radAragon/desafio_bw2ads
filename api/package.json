@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.5.2",
     "hapi": "^17.4.0",
     "joi": "^13.3.0",
     "mysql2": "^1.5.3",
