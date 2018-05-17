@@ -1,20 +1,20 @@
 const hapi = require('hapi')
-const buyticket = require('./buyticket')
+const buy = require('./buy')
 
 const PORT = 3000
 
 const server = hapi.server({
   port: PORT,
-  host: 'localhost',
   debug: {
-    request: '*'
+    request: ['error']
   }
 })
 
-server.route(buyticket)
+server.route(buy.post)
+server.route(buy.get)
 
 server.route({
-  path: '/health',
+  path: '/',
   method: 'GET',
   handler: () => 'alive'
 })
