@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const PurchaseStatus = require('./purchaseStatus')
+const TransactionStatus = require('./transactionStatus')
 
-const Purchase = db.define('purchase', {
-  idPurchaseStatus: Sequelize.INTEGER,
+const Transaction = db.define('transaction', {
+  idTransactionStatus: Sequelize.INTEGER,
   buyDate: Sequelize.DATE,
   idAccount: Sequelize.INTEGER,
   idTicket: Sequelize.INTEGER,
@@ -13,9 +13,9 @@ const Purchase = db.define('purchase', {
 })
 
 module.exports = () => {
-  Purchase.belongsTo(PurchaseStatus(), {
-    foreignKey: 'idPurchaseStatus'
+  Transaction.belongsTo(TransactionStatus(), {
+    foreignKey: 'idTransactionStatus'
   })
 
-  return Purchase
+  return Transaction
 }

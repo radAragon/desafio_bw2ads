@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const PurchaseStatus = db.define('purchaseStatus', {
+const TransactionStatus = db.define('transactionStatus', {
   name: Sequelize.STRING
 }, {
   freezeTableName: true
 })
 
-module.exports = () => PurchaseStatus
+module.exports = () => TransactionStatus
