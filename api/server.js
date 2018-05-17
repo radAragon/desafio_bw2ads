@@ -1,5 +1,6 @@
 const hapi = require('hapi')
 const buy = require('./buy')
+const worker = require('./worker')
 
 const PORT = 3000
 
@@ -21,6 +22,10 @@ server.route({
 
 async function init () {
   await server.start()
+
+  // Works in parallel
+  worker.consumerDaemon(server)
+
   console.log(`desafio api is listening on port ${PORT}!`)
 }
 

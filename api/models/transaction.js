@@ -12,10 +12,8 @@ const Transaction = db.define('transaction', {
   failDescription: Sequelize.STRING
 })
 
-module.exports = () => {
-  Transaction.belongsTo(TransactionStatus(), {
-    foreignKey: 'idTransactionStatus'
-  })
+Transaction.belongsTo(TransactionStatus, {
+  foreignKey: 'idTransactionStatus'
+})
 
-  return Transaction
-}
+module.exports = Transaction

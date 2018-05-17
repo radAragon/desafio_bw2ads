@@ -7,4 +7,4 @@ const TransactionStatus = db.define('transactionStatus', {
   freezeTableName: true
 })
 
-module.exports = () => TransactionStatus
+module.exports = TransactionStatus

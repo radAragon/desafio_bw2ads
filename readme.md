@@ -11,3 +11,9 @@ Realização de desafio B2Ads (https://github.com/admatic-tool/vaga-b2wads-senio
 
 * `$ docker-compose up -d`
   * Pode ser necessário utilizar `sudo`
+
+## Para acessar API:
+
+* `<localhost:3001>`
+  * `/buy` POST
+  * `/buy/{transactionId}` GET

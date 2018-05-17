@@ -10,7 +10,7 @@ async function handler (request, h) {
   const response = {}
 
   await db.transaction(async (t) => {
-    const newTransaction = await Transaction().create({
+    const newTransaction = await Transaction.create({
       buyDate: input.data_compra,
       idAccount: input.account_id,
       idTicket: input.id_ingresso,

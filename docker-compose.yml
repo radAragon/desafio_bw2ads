@@ -26,6 +26,20 @@ services:
       - RABBITMQ_DEFAULT_USER=desafio
       - RABBITMQ_DEFAULT_PASS=mudar123
 
+  foo:
+    build:
+      context: .
+      dockerfile: ./foo/Dockerfile
+    ports:
+      - '3002:3000'
+
+  fighters:
+    build:
+      context: .
+      dockerfile: ./fighters/Dockerfile
+    ports:
+      - '3003:4000'
+
   desafio:
     build:
       context: .
@@ -35,9 +49,13 @@ services:
     depends_on:
       - mysql
       - rabbitmq
+      - foo
+      - fighters
     links:
       - mysql
       - rabbitmq
+      - foo
+      - fighters
     environment:
       - DB_USER=desafio
       - DB_PASS=mudar123
@@ -48,40 +66,10 @@ services:
       - RABBITMQ_QUEUE=fila1
       - RABBITMQ_USER=desafio
       - RABBITMQ_PASS=mudar123
-
-  foo:
-    build:
-      context: .
-      dockerfile: ./foo/Dockerfile
-    ports:
-      - '3002:3000'
-    depends_on:
-      - mysql
-    links:
-      - mysql
-    environment:
-      - DB_USER=desafio
-      - DB_PASS=mudar123
-      - DB_HOST=mysql
-      - DB_PORT=3006
-      - DB_NAME=b2wadds
-
-  fighters:
-    build:
-      context: .
-      dockerfile: ./fighters/Dockerfile
-    ports:
-      - '3003:4000'
-    depends_on:
-      - mysql
-    links:
-      - mysql
-    environment:
-      - DB_USER=desafio
-      - DB_PASS=mudar123
-      - DB_HOST=mysql
-      - DB_PORT=3006
-      - DB_NAME=b2wadds
+      - TICKET_CONTROL_HOST=foo
+      - TICKET_CONTROL_PORT=3002
+      - VALUE_CONTROL_HOST=fighters
+      - VALUE_CONTROL_PORT=3003
 
 volumes:
   mysql:
