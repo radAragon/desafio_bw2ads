@@ -9,5 +9,5 @@ Realização de desafio B2Ads (https://github.com/admatic-tool/vaga-b2wads-senio
 
 ## Para executar:
 
-* `$ docker-compose up`
+* `$ docker-compose up -d`
   * Pode ser necessário utilizar `sudo`
