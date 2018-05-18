@@ -6,14 +6,14 @@ const HTTP_STATUS_NOT_FOUND = 404
 async function handler (request, h) {
   const input = request.params
 
-  const transaction = await Transaction().findOne({
+  const transaction = await Transaction.findOne({
     attributes: ['failDescription'],
     where: {
       id: input.transactionId
     },
     include: [
       {
-        model: TransactionStatus(),
+        model: TransactionStatus,
         attributes: ['name']
       }
     ]

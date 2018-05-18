@@ -5,7 +5,7 @@ services:
   mysql:
     image: mysql:5.7
     ports:
-      - '3006:3306'
+      - '3306:3306'
     volumes:
       - ./docker_volumes/mysql:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d
@@ -61,7 +61,7 @@ services:
       - DB_USER=desafio
       - DB_PASS=mudar123
       - DB_HOST=mysql
-      - DB_PORT=3006
+      - DB_PORT=3306
       - DB_NAME=b2wadds
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_QUEUE=fila1
@@ -74,4 +74,5 @@ services:
 
 volumes:
   mysql:
+  rabbitmq:
   desafio:

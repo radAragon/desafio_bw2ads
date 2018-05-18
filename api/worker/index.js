@@ -12,13 +12,23 @@ async function worker (message) {
 }
 
 async function consumerDaemon (server) {
-  const response = await queue.consume(worker)
+  let response
+
+  while (server.info.started) {
+    try {
+      response = await queue.consume(worker)
+      break
+    } catch (err) {
+      await (new Promise(resolve => setTimeout(resolve, 5000)))
+    }
+  }
 
   if (!response) {
     throw new Error('Closed queue!')
   }
 
   consumerTag = response.consumerTag
+  console.log('Queue consumer tag:', consumerTag)
 }
 
 module.exports = {
