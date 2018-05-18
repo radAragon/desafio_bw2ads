@@ -68,9 +68,9 @@ services:
       - RABBITMQ_USER=desafio
       - RABBITMQ_PASS=mudar123
       - TICKET_CONTROL_HOST=foo
-      - TICKET_CONTROL_PORT=3002
+      - TICKET_CONTROL_PORT=3000
       - VALUE_CONTROL_HOST=fighters
-      - VALUE_CONTROL_PORT=3003
+      - VALUE_CONTROL_PORT=4000
 
 volumes:
   mysql:
