@@ -3,12 +3,18 @@ const purchaseTransaction = require('./purchaseTransaction')
 
 let consumerTag
 
+const waitDelay = async () => await (new Promise(resolve => setTimeout(resolve, 5000)))
+
 async function worker (message) {
-  const content = message.content.toString()
-
-  await purchaseTransaction(content)
-
-  return queue.ack(message)
+  try {
+    const content = message.content.toString()
+    await purchaseTransaction(content)
+    return queue.ack(message)
+  } catch (err) {
+    console.log('Transaction back to queue')
+    await waitDelay()
+    return queue.nack(message)
+  }
 }
 
 async function consumerDaemon (server) {
@@ -19,7 +25,7 @@ async function consumerDaemon (server) {
       response = await queue.consume(worker)
       break
     } catch (err) {
-      await (new Promise(resolve => setTimeout(resolve, 5000)))
+      await waitDelay()
     }
   }
 

@@ -1,38 +1,37 @@
-const Sequelize = require('sequelize')
-const got = require('got')
 const Transaction = require('../models/transaction')
 const db = require('../db')
-const config = require('../config')
+const { validateTicket, postTicket } = require('./ticketControl')
+const { postValue } = require('./valueControl')
 
 const IN_PROCESS = 2
 const SUCCESS = 3
 const FAIL = 4
 
-async function validateShow (idTicket, idShow) {
-  const response = await got(config.ticketControlEndpoint, {
-    body: JSON.stringify({
-      'id_ingresso': idTicket,
-      'id_show': idShow
-    })
-  })
-}
-
 async function purchaseTransaction (content) {
-  const purchaseTransaction = await Transaction.findOne({
-    where: {
-      id: parseInt(content)
+  try {
+    const purchaseTransaction = await Transaction.findOne({
+      where: {
+        id: parseInt(content)
+      }
+    })
+
+    if (!purchaseTransaction) throw new Error('Purchase Transaction not found!')
+
+    if ([SUCCESS, FAIL].includes(purchaseTransaction.idTransactionStatus)) {
+      return // Already done
     }
-  })
 
-  if (!purchaseTransaction) throw new Error('Purchase Transaction not found!')
-
-  if ([SUCCESS, FAIL].contains(purchaseTransaction.idTransactionStatus)) {
-    return // Already done
-  } else if (purchaseTransaction.idTransactionStatus !== IN_PROCESS) {
     await purchaseTransaction.setTransactionStatus(IN_PROCESS)
+
+    if (await validateTicket(purchaseTransaction.idTicket, purchaseTransaction.idShow)) {
+      await postTicket(purchaseTransaction.idTicket, purchaseTransaction.idShow)
+      await postValue(purchaseTransaction.idShow, purchaseTransaction.value)
+      await purchaseTransaction.setTransactionStatus(SUCCESS)
+    }
+  } catch (err) {
+    console.log('Purchase Transaction fail:', err.message)
+    throw err
   }
-
-
 }
 
 module.exports = purchaseTransaction

@@ -3,7 +3,7 @@ module.exports = {
     dialect: 'mysql',
     database: process.env.DB_NAME || 'b2wadds',
     host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT) || 3006,
+    port: parseInt(process.env.DB_PORT) || 3306,
     username: process.env.DB_USER || 'desafio',
     password: process.env.DB_PASS || 'mudar123'
   },
